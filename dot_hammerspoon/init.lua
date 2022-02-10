@@ -13,7 +13,7 @@ spoon.AppBindings:bind('Firefox', {
 	{ meh, 'down', {'cmd'}, 'l' },
 	{ meh, 'x', {'cmd'}, 'left'},
 	{ meh, 'd', {'cmd'}, 'right'},
-	{ meh, 'delete', {'cmd'}, 'w'}
+	{ meh, 'forwarddelete', {'cmd'}, 'w'}
 })
 spoon.AppBindings:bind('Google Chrome', {
 	{ meh, 'left', {'ctrl', 'shift' }, 'tab' },
@@ -21,7 +21,7 @@ spoon.AppBindings:bind('Google Chrome', {
 	{ meh, 'down', {'cmd'}, 'l' },
 	{ meh, 'x', {'cmd'}, 'left'},
 	{ meh, 'd', {'cmd'}, 'right'},
-	{ meh, 'delete', {'cmd'}, 'w'}
+	{ meh, 'forwarddelete', {'cmd'}, 'w'}
 })
 
 
