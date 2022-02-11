@@ -77,8 +77,9 @@ function focusScreen(screen)
 	hs.mouse.setAbsolutePosition(pt)
 end
 
-hs.hotkey.bind(meh, "i", function() focusScreen(getFocusedScreen():previous()) end)
-hs.hotkey.bind(meh, "n", function() focusScreen(getFocusedScreen():next()) end)
+hs.hotkey.bind(meh, "i", function() focusScreen(hs.screen.allScreens()[3]) end)
+hs.hotkey.bind(meh, "e", function() focusScreen(hs.screen.allScreens()[1]) end)
+hs.hotkey.bind(meh, "n", function() focusScreen(hs.screen.allScreens()[2]) end)
 
 hs.hotkey.bind(meh, ",", wm.windowMaximize)
 hs.hotkey.bind(meh, "h", function() wm.moveWindowToPosition(wm.screenPositions.left) end)
