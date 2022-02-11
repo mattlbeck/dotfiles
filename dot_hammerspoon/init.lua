@@ -24,13 +24,9 @@ spoon.AppBindings:bind('Google Chrome', {
 	{ meh, 'forwarddelete', {'cmd'}, 'w'}
 })
 
-
-  
-
 hs.hotkey.bind(hyper, "c", function()
 	hs.execute("open -a Firefox https://www.youtube.com/watch?v=7NOSDKb0HlU")
 end)
-
 
 function mehApp(key, app)
 	hs.hotkey.bind(meh, key, function() 
@@ -44,42 +40,13 @@ mehApp("3", "Google Chrome")
 mehApp("4", "Firefox")
 mehApp("5", "Hyper")
 
-function getFocusedScreen()
-	return hs.window.focusedWindow():screen()
-end
-
-function moveToScreen(screen)
-	local win = hs.window.focusedWindow()
-	win:moveToScreen(screen, false, true) 
-end
-
 -- The direction of these switchers are reversed on my setup
-hs.hotkey.bind(meh, "y", function() moveToScreen(getFocusedScreen():previous()) end) 
-hs.hotkey.bind(meh, "l", function() moveToScreen(getFocusedScreen():next()) end)
+hs.hotkey.bind(meh, "y", function() wm.moveToScreen(wm.getFocusedScreen():previous()) end) 
+hs.hotkey.bind(meh, "l", function() wm.moveToScreen(wm.getFocusedScreen():next()) end)
 
---Predicate that checks if a window belongs to a screen
-function isInScreen(screen, win)
-	return win:screen() == screen
-end
-
-function focusScreen(screen)
-	--Get windows within screen, ordered from front to back.
-	--If no windows exist, bring focus to desktop. Otherwise, set focus on
-	--front-most application window.
-	local windows = hs.fnutils.filter(
-		hs.window.orderedWindows(),
-		hs.fnutils.partial(isInScreen, screen))
-	local windowToFocus = #windows > 0 and windows[1] or hs.window.desktop()
-	windowToFocus:focus()
-
-	-- Move mouse to center of screen
-	local pt = hs.geometry.rectMidPoint(screen:fullFrame())
-	hs.mouse.setAbsolutePosition(pt)
-end
-
-hs.hotkey.bind(meh, "i", function() focusScreen(hs.screen.allScreens()[3]) end)
-hs.hotkey.bind(meh, "e", function() focusScreen(hs.screen.allScreens()[1]) end)
-hs.hotkey.bind(meh, "n", function() focusScreen(hs.screen.allScreens()[2]) end)
+hs.hotkey.bind(meh, "i", function() wm.focusScreen(hs.screen.allScreens()[3]) end)
+hs.hotkey.bind(meh, "e", function() wm.focusScreen(hs.screen.allScreens()[1]) end)
+hs.hotkey.bind(meh, "n", function() wm.focusScreen(hs.screen.allScreens()[2]) end)
 
 hs.hotkey.bind(meh, ",", wm.windowMaximize)
 hs.hotkey.bind(meh, "h", function() wm.moveWindowToPosition(wm.screenPositions.left) end)

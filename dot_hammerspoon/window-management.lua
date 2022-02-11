@@ -50,4 +50,33 @@ function This.windowMaximize(factor, window)
    end
 end
 
+--Predicate that checks if a window belongs to a screen
+function This.isInScreen(screen, win)
+	return win:screen() == screen
+end
+
+function This.focusScreen(screen)
+	--Get windows within screen, ordered from front to back.
+	--If no windows exist, bring focus to desktop. Otherwise, set focus on
+	--front-most application window.
+	local windows = hs.fnutils.filter(
+		hs.window.orderedWindows(),
+		hs.fnutils.partial(This.isInScreen, screen))
+	local windowToFocus = #windows > 0 and windows[1] or hs.window.desktop()
+	windowToFocus:focus()
+
+	-- Move mouse to center of screen
+	local pt = hs.geometry.rectMidPoint(screen:fullFrame())
+	hs.mouse.setAbsolutePosition(pt)
+end
+
+function This.getFocusedScreen()
+	return hs.window.focusedWindow():screen()
+end
+
+function This.moveToScreen(screen)
+	local win = hs.window.focusedWindow()
+	win:moveToScreen(screen, false, true) 
+end
+
 return This
