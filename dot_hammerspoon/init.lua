@@ -62,9 +62,15 @@ hs.hotkey.bind(meh, "e", function() wm.focusScreen(hs.screen.allScreens()[1]) en
 hs.hotkey.bind(meh, "n", function() wm.focusScreen(hs.screen.allScreens()[2]) end)
 
 -- Resize the focussed window to cover left half, right half, or fill the screen
-hs.hotkey.bind(meh, ",", wm.windowMaximize)
-hs.hotkey.bind(meh, "h", function() wm.moveWindowToPosition(wm.screenPositions.left) end)
-hs.hotkey.bind(meh, ".", function() wm.moveWindowToPosition(wm.screenPositions.right) end)
+hs.hotkey.bind(hyper, "s", wm.windowMaximize)
+hs.hotkey.bind(hyper, "r", function() wm.moveWindowToPosition(wm.screenPositions.left) end)
+hs.hotkey.bind(hyper, "t", function() wm.moveWindowToPosition(wm.screenPositions.right) end)
+hs.hotkey.bind(hyper, "x", function() wm.moveWindowToPosition(wm.screenPositions.bottomLeft) end)
+hs.hotkey.bind(hyper, "c", function() wm.moveWindowToPosition(wm.screenPositions.bottom) end)
+hs.hotkey.bind(hyper, "t", function() wm.moveWindowToPosition(wm.screenPositions.bottomRight) end)
+hs.hotkey.bind(hyper, "w", function() wm.moveWindowToPosition(wm.screenPositions.topLeft) end)
+hs.hotkey.bind(hyper, "f", function() wm.moveWindowToPosition(wm.screenPositions.top) end)
+hs.hotkey.bind(hyper, "p", function() wm.moveWindowToPosition(wm.screenPositions.topRight) end)
 
 -- This screen switcher is a little slow and the filtering for a specific screen is not working properly
 function focusedScreenSwitcher()
