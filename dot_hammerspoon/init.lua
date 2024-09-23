@@ -50,25 +50,36 @@ mehApp("3", "Google Chrome")
 mehApp("4", "Firefox")
 mehApp("5", "Hyper")
 
--- Move the focussed window to the next or previous screen
--- The direction of these switchers are reversed on my setup
-hs.hotkey.bind(meh, "y", function() wm.moveToScreen(wm.getFocusedScreen():previous()) end) 
-hs.hotkey.bind(meh, "l", function() wm.moveToScreen(wm.getFocusedScreen():next()) end)
+-- hammerspoon window switcher
+-- set up your windowfilter
+switcher = hs.window.switcher.new() -- default windowfilter: only visible windows, all Spaces
+hs.hotkey.bind('hyper', 'tab', function() switcher:next() end) -- switch to next window
 
--- Focus on the foremost window of a particular screen. Can be used with moveToScreen to
--- focus a window and then move it somewhere else
-hs.hotkey.bind(meh, "i", function() wm.focusScreen(hs.screen.allScreens()[3]) end)
-hs.hotkey.bind(meh, "e", function() wm.focusScreen(hs.screen.allScreens()[1]) end)
-hs.hotkey.bind(meh, "n", function() wm.focusScreen(hs.screen.allScreens()[2]) end)
+hs.loadSpoon("MiroWindowsManager")  
 
--- Resize the focussed window to cover left half, right half, or fill the screen
-hs.hotkey.bind(meh, ",", wm.windowMaximize)
-hs.hotkey.bind(meh, "h", function() wm.moveWindowToPosition(wm.screenPositions.left) end)
-hs.hotkey.bind(meh, ".", function() wm.moveWindowToPosition(wm.screenPositions.right) end)
+hs.window.animationDuration = 0.3
+spoon.MiroWindowsManager:bindHotkeys({
+  up = {hyper, "up"},
+  right = {hyper, "right"},
+  down = {hyper, "down"},
+  left = {hyper, "left"},
+  fullscreen = {hyper, "f"},
+  nextscreen = {hyper, "n"}
+})
 
 -- This screen switcher is a little slow and the filtering for a specific screen is not working properly
 function focusedScreenSwitcher()
 	return hs.window.switcher.new(hs.window.filter.new():setScreens(hs.window.focusedWindow():screen():id()))
 end
 hs.hotkey.bind(meh, "tab", function() focusedScreenSwitcher():next() end)
+
+-- Bind hotkeys to move focus to the immediate left or right window
+hs.hotkey.bind(meh, "l", function()
+    wm.focusWindow("right")
+end)
+
+hs.hotkey.bind(meh, "y", function()
+    wm.focusWindow("left")
+end)
+
 hs.alert.show("config reloaded")

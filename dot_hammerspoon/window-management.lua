@@ -79,4 +79,40 @@ function This.moveToScreen(screen)
 	win:moveToScreen(screen, false, true) 
 end
 
+-- ChatGPT generated this function
+-- Function to get the window to the right or left of the current window
+function This.focusWindow(direction)
+    local win = hs.window.focusedWindow()  -- Get the currently focused window
+    if not win then return end
+	print("focusWindow")
+
+    local screen = win:screen()  -- Get the screen of the current window
+    local windows = hs.window.visibleWindows()  -- Get all visible windows
+    local winFrame = win:frame()  -- Get the frame of the current window
+
+    -- Sort windows by x position (left to right)
+    table.sort(windows, function(a, b)
+        return a:frame().x < b:frame().x
+    end)
+
+    -- Find the index of the current window
+    local index
+    for i, w in ipairs(windows) do
+        if w:id() == win:id() then
+            index = i
+            break
+        end
+    end
+
+    if not index then return end
+
+    -- Focus the window to the left or right
+    if direction == "right" and index < #windows then
+        windows[index + 1]:focus()
+    elseif direction == "left" and index > 1 then
+        windows[index - 1]:focus()
+    end
+end
+
+
 return This
