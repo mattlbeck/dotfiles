@@ -80,17 +80,60 @@ function This.moveToScreen(screen)
 end
 
 -- ChatGPT generated this function
+-- Function to check if a window is fully obscured by another window
+function framesOverlap(win1, win2)
+    local frame1 = win1:frame()
+    local frame2 = win2:frame()
+    x_overlap = math.max(0, math.min(frame1.x + frame1.w, frame2.x + frame2.w) - math.max(frame1.x, frame2.x))
+    y_overlap = math.max(0, math.min(frame1.y + frame1.h, frame2.y + frame2.h) - math.max(frame1.y, frame2.y))
+
+    print("x overlap: ".. x_overlap.. " y overlap ".. y_overlap)
+    
+    
+    -- Check if win2 completely covers win1 in both horizontal and vertical axes
+    return x_overlap > 0 and y_overlap > 0
+end
+
+-- Function to get visible windows that are not fully covered by other windows
+function getVisibleWindows()
+    local windows = hs.window.orderedWindows() -- gets windows in front-to-back order
+    local visibleWindows = {}
+    
+    -- Add windows to the visible list if they are not partially obscured
+    for i, win in ipairs(windows) do
+        if win:title() ~= "" then
+
+            local frame = win:frame()
+            local isCovered = false
+            
+            -- check this window against windows that are in front of it in the z order
+            for j = 1, i - 1 do
+                if windows[j]:title() ~= "" then
+                    local otherFrame = windows[j]:frame()
+                    if framesOverlap(win, windows[j]) then
+                        isCovered = true
+                        break
+                    end
+                end
+            end
+            
+            -- If the window is not partially obscured consider it visible
+            if not isCovered then
+                table.insert(visibleWindows, win)
+            end
+        end
+    end
+    
+    return visibleWindows
+end
+
 -- Function to get the window to the right or left of the current window
 function This.focusWindow(direction)
     local win = hs.window.focusedWindow()  -- Get the currently focused window
     if not win then return end
-	print("focusWindow")
-
-    local screen = win:screen()  -- Get the screen of the current window
-    local windows = hs.window.visibleWindows()  -- Get all visible windows
-    local winFrame = win:frame()  -- Get the frame of the current window
-
-    -- Sort windows by x position (left to right)
+    
+    -- Get all visible windows on the current screen, sorted left-to-right
+    local windows = getVisibleWindows()
     table.sort(windows, function(a, b)
         return a:frame().x < b:frame().x
     end)
