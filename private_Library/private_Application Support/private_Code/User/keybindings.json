@@ -15,5 +15,47 @@
     {
         "key": "shift+cmd+[",
         "command": "-workbench.action.previousEditor"
+    },
+    {
+        "key": "ctrl+shift+alt+cmd+down",
+        "command": "workbench.action.terminal.focus",
+        "when": "!terminalFocus"
+    },
+    {
+        "key": "ctrl+shift+alt+cmd+down",
+         "command": "workbench.action.focusActiveEditorGroup",
+         "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+shift+alt+cmd+l",
+        "command": "workbench.action.focusLeftGroup",
+    },
+    {
+        "key": "ctrl+shift+alt+cmd+r",
+        "command": "workbench.action.focusRightGroup",
+    },
+    {
+        "key": "ctrl+shift+alt+cmd+[",
+        "command": "workbench.action.moveEditorToLeftGroup",
+    },
+    {
+        "key": "ctrl+shift+alt+cmd+]",
+        "command": "workbench.action.moveEditorToRightGroup",
+    },
+    {
+        "key": "ctrl+shift+alt+cmd+1",
+        "command": "workbench.action.closeGroup",
+    },
+    {
+        "key": "ctrl+shift+alt+cmd+a",
+        "command": "workbench.action.moveEditorLeftInGroup" 
+    },
+    {
+        "key": "ctrl+shift+alt+cmd+d",
+        "command": "workbench.action.moveEditorRightInGroup"
+    },
+    {
+        "key": "ctrl+shift+alt+cmd+s",
+        "command": "workbench.action.splitEditorRight"
     }
 ]
