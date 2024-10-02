@@ -57,6 +57,7 @@ function obj:bind(appTitle, keymap)
 
   local function enableKeys()
     for i, hotkey in pairs(hotkeys) do
+      self.logger.d("hotkey: " .. tostring(hotkey))
       hotkey:enable()
     end
   end

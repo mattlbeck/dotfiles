@@ -7,7 +7,25 @@ local wm = require("window-management")
 -- of the hotkey binding
 hyper =  {'ctrl', 'shift', 'alt', 'cmd'}
 meh =  {'ctrl', 'shift', 'alt'} 
-
+-- map hyper or meh hotkeys for certain apps
+-- it is often easier to do this here than 
+-- configure each app individually
+-- An exception is VS Code, where this mapping
+-- is not working. Instead I have directly applied this keybinding in
+-- vs code's settings
+hs.loadSpoon("AppBindings")
+spoon.AppBindings:bind('Firefox', {
+	{ hyper, 'left', {'ctrl', 'shift' }, 'tab' },
+	{ hyper, 'right', {'ctrl'}, 'tab' },
+})
+spoon.AppBindings:bind('Google Chrome', {
+	{ hyper, 'left', {'ctrl', 'shift' }, 'tab' },
+	{ hyper, 'right', {'ctrl'}, 'tab' },
+})
+-- spoon.AppBindings:bind('Code', {
+--	{ hyper, 'left', {'cmd', 'alt'}, 'left'},
+--	{ hyper, 'right', {'cmd', 'alt'}, 'right'}
+-- })
 
 -- One-key Chill mode!
 -- Opens the youtube Chillhop stream with one key
@@ -39,20 +57,20 @@ hs.hotkey.bind(hyper, 'tab', function() switcher:next() end) -- switch to next w
 hs.loadSpoon("MiroWindowsManager")  
 
 hs.window.animationDuration = 0.3
-spoon.MiroWindowsManager:bindHotkeys({
-  up = {hyper, "up"},
-  right = {hyper, "right"},
-  down = {hyper, "down"},
-  left = {hyper, "left"},
-  fullscreen = {hyper, "f"},
-  nextscreen = {hyper, "n"}
-})
+-- spoon.MiroWindowsManager:bindHotkeys({
+--   up = {hyper, "up"},
+--   right = {hyper, "right"},
+--   down = {hyper, "down"},
+--   left = {hyper, "left"},
+--   fullscreen = {hyper, "f"},
+--   nextscreen = {hyper, "n"}
+-- })
 
 -- This screen switcher is a little slow and the filtering for a specific screen is not working properly
-function focusedScreenSwitcher()
-	return hs.window.switcher.new(hs.window.filter.new():setScreens(hs.window.focusedWindow():screen():id()))
-end
-hs.hotkey.bind(meh, "tab", function() focusedScreenSwitcher():next() end)
+-- function focusedScreenSwitcher()
+-- 	return hs.window.switcher.new(hs.window.filter.new():setScreens(hs.window.focusedWindow():screen():id()))
+-- end
+-- hs.hotkey.bind(meh, "tab", function() focusedScreenSwitcher():next() end)
 
 -- Bind hotkeys to move focus to the immediate left or right window
 hs.hotkey.bind(meh, "right", function()
