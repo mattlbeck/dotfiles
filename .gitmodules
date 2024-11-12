@@ -1,0 +1,3 @@
+[submodule "dot_hammerspoon/HotSwitch-HS"]
+	path = dot_hammerspoon/HotSwitch-HS
+	url = https://github.com/oniatsu/HotSwitch-HS.git
